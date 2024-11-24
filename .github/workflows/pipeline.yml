@@ -2,14 +2,13 @@ name: Premier League Pipeline
 
 on:
   schedule:
-    # Ejecutar todos los días a las 00:00 UTC
-    - cron: '0 0 * * 6,0'
-  workflow_dispatch:  # Permite ejecutar el workflow manualmente
+    - cron: '0 0 * * 6,0'  # Runs at 00:00 on Saturday and Sunday
+  workflow_dispatch:  # Allows manual trigger
 
 jobs:
   update_premier_league_data:
     runs-on: ubuntu-latest
-
+    
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -19,10 +18,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
@@ -36,11 +35,11 @@ jobs:
 
       - name: Upload logs as artifact
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: execution-logs
-          path: |
-            *.log
+          path: "*.log"
+          retention-days: 5
 
       - name: Notify on failure
         if: failure()
