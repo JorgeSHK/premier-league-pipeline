@@ -19,3 +19,7 @@ psycopg2-binary==2.9.7
 python-dotenv==1.0.0
 pytest==7.4.0
 logging==0.4.9.6
+
+# Dashboard
+streamlit==1.24.0
+plotly==5.15.0
